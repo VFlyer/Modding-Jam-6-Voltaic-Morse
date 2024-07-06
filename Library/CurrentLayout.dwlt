@@ -45,7 +45,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 100
+  controlID: 26
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -326,18 +326,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Editor/Resources
+    - Assets
   m_ViewMode: 1
   m_StartGridSize: 55
   m_LastFolders:
-  - Assets/Editor/Resources
+  - Assets
   m_LastFoldersGridSize: 55
-  m_LastProjectPath: C:\Users\Vincent\Documents\Unity\Modding Jam 6
+  m_LastProjectPath: C:\Users\Vincent\Documents\GitHub\Modding Jam 6
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 78290000
-    m_LastClickedID: 10616
+    m_SelectedIDs: fe280000
+    m_LastClickedID: 10494
     m_ExpandedIDs: 00000000fe280000382a0000042b0000e62c0000782e0000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
