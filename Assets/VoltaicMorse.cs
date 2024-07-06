@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class VoltaicMorse : MonoBehaviour {
@@ -93,12 +94,14 @@ public class VoltaicMorse : MonoBehaviour {
 			StartCoroutine(RenderPickedWord());
 			return;
         }
+		statusLight.enabled = true;
 		if (idxPicked == expectedIdx)
         {
 			QuickLog("Correct voltage submitted.");
 			modSelf.HandlePass();
 			ledRenderer.material.color = Color.green;
-			statusLight.enabled = true;
+			
+			statusLight.color = Color.green;
 			solved = true;
 			needleHandler.nextProg = 0f;
 			needleHandler.speed = 0.125f;
@@ -108,9 +111,10 @@ public class VoltaicMorse : MonoBehaviour {
 			QuickLog("Submitted an incorrect voltage of {0}", possibleVoltages[idxPicked - 1]);
 			modSelf.HandleStrike();
 			ledRenderer.material.color = Color.red;
-			statusLight.enabled = true;
 			statusLight.color = Color.red;
 			idxPicked = 0;
+			needleHandler.nextProg = 0.5f;
+			needleHandler.speed = 0.25f;
 		}
 	}
 
@@ -176,4 +180,55 @@ public class VoltaicMorse : MonoBehaviour {
 		interactable = true;
 		needleHandler.nextProg = 0.5f;
 	}
+	string TwitchHelpMessage = "\"!{0} submit 5.5\" OR \"!{0} sub 5.5\" OR \"!{0} enter 5.5\" [Submits a voltage of 5.5] | \"!{0} play\" OR \"!{0} receive\" [Plays a transmission.]";
+	IEnumerator ProcessTwitchCommand(string cmd)
+    {
+		var intCmd = cmd.Trim();
+		var rgxSubmit = Regex.Match(intCmd, @"^(sub|enter|submit)\s", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+		var rgxPlay = Regex.Match(intCmd, @"^(play|receive)$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+		if (rgxPlay.Success)
+        {
+			if (!interactable || !activated)
+			{
+				yield return "sendtochaterror I cannot interact with the button right now. Wait a bit.";
+				yield break;
+			}
+			yield return null;
+			controlBtn.OnInteract();
+        }
+		else if (rgxSubmit.Success)
+        {
+			var cmdLastPart = intCmd.Split().Last();
+			if (!possibleVoltages.Contains(cmdLastPart))
+            {
+				yield return string.Format("sendtochaterror I cannot submit a voltage of \"{0}\" onto the module.", cmdLastPart);
+				yield break;
+            }
+			if (!interactable || !activated)
+			{
+				yield return "sendtochaterror I cannot interact with the button right now. Wait a bit.";
+				yield break;
+			}
+			var idxToSet = 1 + possibleVoltages.IndexOf(cmdLastPart);
+			yield return null;
+			while (idxToSet != idxPicked)
+            {
+				(idxPicked > idxToSet ? leftBtn : rightBtn).OnInteract();
+				yield return new WaitForSeconds(0.1f);
+            }
+			controlBtn.OnInteract();
+        }
+    }
+	IEnumerator TwitchHandleForcedSolve()
+    {
+		while (!interactable || !activated)
+			yield return true;
+		while (idxPicked != expectedIdx)
+        {
+			(idxPicked > expectedIdx ? leftBtn : rightBtn).OnInteract();
+			yield return new WaitForSeconds(0.1f);
+        }
+		controlBtn.OnInteract();
+    }
+
 }

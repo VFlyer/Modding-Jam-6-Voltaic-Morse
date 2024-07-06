@@ -33,3 +33,6 @@ Gen
 
 .idea
 *.dwlt
+/build
+/Library
+/obj
