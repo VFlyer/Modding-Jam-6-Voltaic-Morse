@@ -340,10 +340,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1219502499593140, guid: 4033256c7334df0429bb31e6bb5a6c43, type: 2}
-      propertyPath: m_Name
-      value: Voltaic Morse
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4033256c7334df0429bb31e6bb5a6c43, type: 2}
   m_IsPrefabParent: 0

@@ -125,9 +125,9 @@ public class VoltaicMorse : MonoBehaviour {
         {
 			var curLetter = wordPicked[curLetterIdx];
 			var curMorse = morseRepresentations[alphabet.IndexOf(curLetter)];
-			var timeRequired = curMorse.Sum(a => a == '-' ? 0.75f : 0.25f) - 0.25f * (curMorse.Length);
+			var timeRequired = curMorse.Sum(a => a == '-' ? 0.75f : 0.25f) - 0.25f * (curMorse.Length - 1);
 			//Debug.Log(timeRequired);
-			while (needleHandler.progress + (timeRequired * needleHandler.speed) > 0.5f && needleHandler.progress > 0f)
+			while (needleHandler.progress + (timeRequired * needleHandler.speed) > 1f - needleHandler.progress && needleHandler.progress > 0f)
 				yield return null;
 			if (needleHandler.progress <= 0f)
             {
@@ -144,7 +144,8 @@ public class VoltaicMorse : MonoBehaviour {
 					yield break;
 				}
 				needleHandler.nextProg = 0f;
-				yield return new WaitForSeconds(0.25f);
+				if (n + 1 < curMorse.Length)
+					yield return new WaitForSeconds(0.25f);
             }
 		}
 		needleHandler.nextProg = 0.5f;
