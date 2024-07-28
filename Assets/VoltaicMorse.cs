@@ -168,7 +168,7 @@ public class VoltaicMorse : MonoBehaviour {
 	void GenerateProcedure()
     {
 		var serialNoDigits = bombInfo.GetSerialNumberNumbers();
-		var voltages = bombInfo.QueryWidgets("voltage", "exish");
+		var voltages = bombInfo.QueryWidgets("volt", "exish");
 		var initialVoltage = possibleVoltages[serialNoDigits.Last() * 2 + serialNoDigits.First() % 2];
 		if (voltages.Count >= 1)
 			initialVoltage = voltages.Max(a => possibleVoltages.IndexOf(a)).ToString();

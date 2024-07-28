@@ -19,6 +19,6 @@ MonoBehaviour:
     winning Modelling Jam.\nModel by Red Penguin.\nVoltage Meter recommended for best
     experience, can be disarmed without it.\n\nModule ID: voltaicMorseModule\n\r\nManual:
     N/A\n=="
-  version: 1.1.1
+  version: 1.1.2
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 42c856ff13c047b4abb4d77bf21e3227, type: 3}
