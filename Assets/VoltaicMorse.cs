@@ -169,9 +169,13 @@ public class VoltaicMorse : MonoBehaviour {
     {
 		var serialNoDigits = bombInfo.GetSerialNumberNumbers();
 		var voltages = bombInfo.QueryWidgets("volt", "exish");
+		Debug.Log(voltages.Join(","));
 		var initialVoltage = possibleVoltages[serialNoDigits.Last() * 2 + serialNoDigits.First() % 2];
 		if (voltages.Count >= 1)
-			initialVoltage = voltages.Max(a => possibleVoltages.IndexOf(a)).ToString();
+		{
+			var regexToFind = Regex.Match(voltages.FirstOrDefault(), @"\d(\.\d)?", RegexOptions.CultureInvariant);
+			initialVoltage = regexToFind.Success ? regexToFind.Value : "0.5";
+		}
 		QuickLog("{0} Voltage registered as {1}", voltages.Any() ? "Voltage meter present." : "Using the serial number to generate fake voltage.", initialVoltage);
 		wordPicked = possibleWords.PickRandom();
 		QuickLog("Selected word: {0}", wordPicked);
@@ -181,7 +185,7 @@ public class VoltaicMorse : MonoBehaviour {
 		interactable = true;
 		needleHandler.nextProg = 0.5f;
 	}
-	string TwitchHelpMessage = "\"!{0} submit 5.5\" OR \"!{0} sub 5.5\" OR \"!{0} enter 5.5\" [Submits a voltage of 5.5] | \"!{0} play\" OR \"!{0} receive\" [Plays a transmission.]";
+	readonly string TwitchHelpMessage = "\"!{0} submit 5.5\" OR \"!{0} sub 5.5\" OR \"!{0} enter 5.5\" [Submits a voltage of 5.5] | \"!{0} play\" OR \"!{0} receive\" [Plays a transmission.]";
 	IEnumerator ProcessTwitchCommand(string cmd)
     {
 		var intCmd = cmd.Trim();
