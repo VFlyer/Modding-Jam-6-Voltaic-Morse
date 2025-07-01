@@ -18,7 +18,7 @@ MonoBehaviour:
     entry to Modding Jam 6, where the user has to make a module using assets of the
     winning Modelling Jam.\nModel by Red Penguin.\nVoltage Meter recommended for best
     experience, can be disarmed without it.\n\nModule ID: voltaicMorseModule\n\r\nManual:
-    N/A\n=="
+    https://ktane.timwi.de/HTML/Voltaic%20Morse.html\n=="
   version: 1.1.3
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 42c856ff13c047b4abb4d77bf21e3227, type: 3}
